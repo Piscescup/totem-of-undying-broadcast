@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "totem-of-undying-broadcast",
+	"version": "${version}",
+	"name": "Totem of Undying Broadcast",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/totem-of-undying-broadcast/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+          "io.github.piscescup.fabricmc.TotemOfUndyingBroadcast"
+		],
+		"fabric-datagen": [
+			"io.github.piscescup.fabricmc.TotemOfUndyingBroadcastDataGenerator"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

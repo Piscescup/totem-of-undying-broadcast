@@ -1,0 +1,14 @@
+{
+  "command.totem-of-undying-broadcast.check.passed.en_us": "Check passed: the totem count is sufficient and the offhand contains a Totem of Undying.",
+  "command.totem-of-undying-broadcast.check.unavailable.en_us": "This check is only available while playing in a world or on a server.",
+  "command.totem-of-undying-broadcast.settings.enable.current.en_us": "Broadcasts currently enabled: %1$s",
+  "command.totem-of-undying-broadcast.settings.enable.updated.en_us": "Broadcasts enabled: %1$s.",
+  "command.totem-of-undying-broadcast.settings.lang.current.en_us": "Current language: %1$s",
+  "command.totem-of-undying-broadcast.settings.lang.updated.en_us": "Language set to %1$s.",
+  "command.totem-of-undying-broadcast.settings.save_failed.en_us": "Unable to save the settings. Check the client log for details.",
+  "command.totem-of-undying-broadcast.settings.summary.en_us": "Num of ToU Broadcast settings — [language: %1$s, warning threshold: %2$s, enabled: %3$s]",
+  "command.totem-of-undying-broadcast.settings.warning_threshold.current.en_us": "Current warning threshold: %1$s",
+  "command.totem-of-undying-broadcast.settings.warning_threshold.updated.en_us": "Warning threshold set to %1$s.",
+  "message.totem-of-undying-broadcast.low_totem_count.en_us": "⚠ %1$s only has %2$s Totem of Undying left!",
+  "message.totem-of-undying-broadcast.offhand_totem_missing.en_us": "⚠ %1$s does not have a Totem of Undying in his(her) offhand!"
+}
