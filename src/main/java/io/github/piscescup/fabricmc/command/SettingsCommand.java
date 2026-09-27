@@ -2,15 +2,19 @@ package io.github.piscescup.fabricmc.command;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.function.Function;
 
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
 
 import io.github.piscescup.fabricmc.TotemCountMonitor;
 import io.github.piscescup.fabricmc.config.BroadcastLanguage;
 import io.github.piscescup.fabricmc.config.BroadcastConfig;
+import io.github.piscescup.fabricmc.config.ConfigKey;
 import io.github.piscescup.fabricmc.config.ConfigManager;
 import io.github.piscescup.fabricmc.datagen.lang.TotemTranslation;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -22,6 +26,9 @@ import static io.github.piscescup.fabricmc.TotemOfUndyingBroadcastReferences.MOD
 
 public final class SettingsCommand {
     private static final String VALUE_ARGUMENT = "value";
+
+    private static final String GETTER = "get";
+    private static final String SETTER = "set";
 
     private SettingsCommand() {}
 
@@ -58,52 +65,94 @@ public final class SettingsCommand {
         };
     }
 
-    private static LiteralArgumentBuilder<FabricClientCommandSource> langSettingCommand(ConfigManager configManager) {
-        return ClientCommands.literal("lang")
-            .executes(context -> showLanguage(context.getSource(), configManager))
-            .then(ClientCommands.argument(VALUE_ARGUMENT, StringArgumentType.word())
-                .suggests((context, builder) -> {
-                    Arrays.stream(BroadcastLanguage.values())
-                        .map(BroadcastLanguage::code)
-                        .forEach(builder::suggest);
+    private static <T> LiteralArgumentBuilder<FabricClientCommandSource> getCommand(
+        ConfigManager configManager,
+        ConfigKey<T> key,
+        TotemTranslation translation
+    ) {
+        return ClientCommands.literal(GETTER)
+            .executes(context -> {
+                BroadcastConfig settings = configManager.settings();
 
-                    return builder.buildFuture();
-                })
-                .executes(context -> setLanguage(
+                return success(
+                    context.getSource(),
+                    translation.component(settings.language(), key.format(settings))
+                );
+            });
+    }
+
+    private static <T> LiteralArgumentBuilder<FabricClientCommandSource> setCommand(
+        ConfigManager configManager,
+        ConfigKey<T> key,
+        TotemTranslation translation,
+        RequiredArgumentBuilder<FabricClientCommandSource, ?> valueArgument,
+        Function<CommandContext<FabricClientCommandSource>, T> valueGetter
+    ) {
+        return ClientCommands.literal(SETTER)
+            .then(valueArgument.executes(context -> {
+                try {
+                    BroadcastConfig settings = configManager.set(key, valueGetter.apply(context));
+
+                    return success(
                         context.getSource(),
-                    configManager,
-                        BroadcastLanguage.fromCode(StringArgumentType.getString(context, VALUE_ARGUMENT))
-                    )
-                )
-            );
+                        translation.component(settings.language(), key.format(settings))
+                    );
+                } catch (IOException exception) {
+                    return saveFailed(context.getSource(), configManager, exception);
+                }
+            }));
+    }
+
+    private static LiteralArgumentBuilder<FabricClientCommandSource> langSettingCommand(ConfigManager configManager) {
+        RequiredArgumentBuilder<FabricClientCommandSource, ?> valueArgument = ClientCommands
+            .argument(VALUE_ARGUMENT, StringArgumentType.word())
+            .suggests((context, builder) -> {
+                Arrays.stream(BroadcastLanguage.values())
+                    .map(BroadcastLanguage::code)
+                    .forEach(builder::suggest);
+
+                return builder.buildFuture();
+            });
+
+        return ClientCommands.literal(ConfigKey.LANGUAGE.name())
+            .then(getCommand(configManager, ConfigKey.LANGUAGE, TotemTranslation.LANGUAGE_CURRENT))
+            .then(setCommand(
+                configManager,
+                ConfigKey.LANGUAGE,
+                TotemTranslation.LANGUAGE_UPDATED,
+                valueArgument,
+                context -> BroadcastLanguage.fromCode(StringArgumentType.getString(context, VALUE_ARGUMENT))
+            ));
     }
 
     private static LiteralArgumentBuilder<FabricClientCommandSource> warningThresholdSettingCommand(
         ConfigManager configManager
     ) {
-        return ClientCommands.literal("warning-threshold")
-            .executes(context -> showWarningThreshold(context.getSource(), configManager))
-            .then(ClientCommands.argument(VALUE_ARGUMENT, IntegerArgumentType.integer(1))
-                .executes(context -> setWarningThreshold(
-                        context.getSource(),
-                        configManager,
-                        IntegerArgumentType.getInteger(context, VALUE_ARGUMENT)
-                    )
-                )
-            );
+        return ClientCommands.literal(ConfigKey.WARNING_THRESHOLD.name())
+            .then(getCommand(
+                configManager,
+                ConfigKey.WARNING_THRESHOLD,
+                TotemTranslation.WARNING_THRESHOLD_CURRENT
+            ))
+            .then(setCommand(
+                configManager,
+                ConfigKey.WARNING_THRESHOLD,
+                TotemTranslation.WARNING_THRESHOLD_UPDATED,
+                ClientCommands.argument(VALUE_ARGUMENT, IntegerArgumentType.integer(1)),
+                context -> IntegerArgumentType.getInteger(context, VALUE_ARGUMENT)
+            ));
     }
 
     private static LiteralArgumentBuilder<FabricClientCommandSource> enableSettingCommand(ConfigManager configManager) {
-        return ClientCommands.literal("enable")
-            .executes(context -> showEnabled(context.getSource(), configManager))
-            .then(ClientCommands.argument(VALUE_ARGUMENT, BoolArgumentType.bool())
-                .executes(context -> setEnabled(
-                        context.getSource(),
-                    configManager,
-                        BoolArgumentType.getBool(context, VALUE_ARGUMENT)
-                    )
-                )
-            );
+        return ClientCommands.literal(ConfigKey.ENABLED.name())
+            .then(getCommand(configManager, ConfigKey.ENABLED, TotemTranslation.ENABLED_CURRENT))
+            .then(setCommand(
+                configManager,
+                ConfigKey.ENABLED,
+                TotemTranslation.ENABLED_UPDATED,
+                ClientCommands.argument(VALUE_ARGUMENT, BoolArgumentType.bool()),
+                context -> BoolArgumentType.getBool(context, VALUE_ARGUMENT)
+            ));
     }
 
     private static int showAll(FabricClientCommandSource source, ConfigManager configManager) {
@@ -112,104 +161,11 @@ public final class SettingsCommand {
             source,
             TotemTranslation.SETTINGS_SUMMARY.component(
                 settings.language(),
-                settings.language()
-                    .code(),
-                settings.warningThreshold(),
-                String.valueOf(settings.enabled())
+                ConfigKey.LANGUAGE.format(settings),
+                ConfigKey.WARNING_THRESHOLD.format(settings),
+                ConfigKey.ENABLED.format(settings)
             )
         );
-    }
-
-    private static int showLanguage(FabricClientCommandSource source, ConfigManager configManager) {
-        BroadcastConfig settings = configManager.settings();
-        return success(
-            source,
-            TotemTranslation.LANGUAGE_CURRENT.component(
-                settings.language(),
-                settings.language()
-                    .code()
-            )
-        );
-    }
-
-    private static int setLanguage(
-        FabricClientCommandSource source,
-        ConfigManager configManager,
-        BroadcastLanguage language
-    ) {
-        try {
-            BroadcastConfig settings = configManager.setLanguage(language);
-            return success(
-                source,
-                TotemTranslation.LANGUAGE_UPDATED.component(
-                    settings.language(),
-                    settings.language()
-                        .code()
-                )
-            );
-        } catch (IOException exception) {
-            return saveFailed(source, configManager, exception);
-        }
-    }
-
-    private static int showWarningThreshold(FabricClientCommandSource source, ConfigManager configManager) {
-        BroadcastConfig settings = configManager.settings();
-        return success(
-            source,
-            TotemTranslation.WARNING_THRESHOLD_CURRENT.component(
-                settings.language(),
-                settings.warningThreshold()
-            )
-        );
-    }
-
-    private static int setWarningThreshold(
-        FabricClientCommandSource source,
-        ConfigManager configManager,
-        int warningThreshold
-    ) {
-        try {
-            BroadcastConfig settings = configManager.setWarningThreshold(warningThreshold);
-            return success(
-                source,
-                TotemTranslation.WARNING_THRESHOLD_UPDATED.component(
-                    settings.language(),
-                    settings.warningThreshold()
-                )
-            );
-        } catch (IOException exception) {
-            return saveFailed(source, configManager, exception);
-        }
-    }
-
-    private static int showEnabled(FabricClientCommandSource source, ConfigManager configManager) {
-        BroadcastConfig settings = configManager.settings();
-        return success(
-            source,
-            TotemTranslation.ENABLED_CURRENT.component(
-                settings.language(),
-                String.valueOf(settings.enabled())
-            )
-        );
-    }
-
-    private static int setEnabled(
-        FabricClientCommandSource source,
-        ConfigManager configManager,
-        boolean enabled
-    ) {
-        try {
-            BroadcastConfig settings = configManager.setEnabled(enabled);
-            return success(
-                source,
-                TotemTranslation.ENABLED_UPDATED.component(
-                    settings.language(),
-                    String.valueOf(settings.enabled())
-                )
-            );
-        } catch (IOException exception) {
-            return saveFailed(source, configManager, exception);
-        }
     }
 
     private static int success(FabricClientCommandSource source, Component message) {

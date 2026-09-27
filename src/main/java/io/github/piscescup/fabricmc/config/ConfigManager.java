@@ -41,6 +41,10 @@ public final class ConfigManager {
         return current;
     }
 
+    public <T> T get(ConfigKey<T> key) {
+        return key.get(current);
+    }
+
     public synchronized void load() {
         if (Files.notExists(configFile)) {
             current = BroadcastConfig.DEFAULT;
@@ -74,18 +78,19 @@ public final class ConfigManager {
     }
 
     public synchronized BroadcastConfig setLanguage(BroadcastLanguage language) throws IOException {
-        BroadcastConfig old = current;
-        return update(new BroadcastConfig(language, old.warningThreshold(), old.enabled()));
+        return set(ConfigKey.LANGUAGE, language);
     }
 
     public synchronized BroadcastConfig setWarningThreshold(int warningThreshold) throws IOException {
-        BroadcastConfig old = current;
-        return update(new BroadcastConfig(old.language(), warningThreshold, old.enabled()));
+        return set(ConfigKey.WARNING_THRESHOLD, warningThreshold);
     }
 
     public synchronized BroadcastConfig setEnabled(boolean enabled) throws IOException {
-        BroadcastConfig old = current;
-        return update(new BroadcastConfig(old.language(), old.warningThreshold(), enabled));
+        return set(ConfigKey.ENABLED, enabled);
+    }
+
+    public synchronized <T> BroadcastConfig set(ConfigKey<T> key, T value) throws IOException {
+        return update(key.withValue(current, value));
     }
 
     private BroadcastConfig update(BroadcastConfig next) throws IOException {
@@ -103,9 +108,9 @@ public final class ConfigManager {
         Files.createDirectories(parent);
 
         JsonObject root = new JsonObject();
-        root.addProperty("lang", settings.language().code());
-        root.addProperty("warning-threshold", settings.warningThreshold());
-        root.addProperty("enable", settings.enabled());
+        root.addProperty(ConfigKey.LANGUAGE.name(), settings.language().code());
+        root.addProperty(ConfigKey.WARNING_THRESHOLD.name(), settings.warningThreshold());
+        root.addProperty(ConfigKey.ENABLED.name(), settings.enabled());
 
         Path temporaryFile = Files.createTempFile(parent, CONFIG_FILE_NAME, ".tmp");
         try {
@@ -128,9 +133,9 @@ public final class ConfigManager {
     }
 
     private static BroadcastConfig parse(JsonObject root) {
-        String languageCode = requiredString(root, "lang");
+        String languageCode = requiredString(root, ConfigKey.LANGUAGE.name());
         int warningThreshold = requiredWarningThreshold(root);
-        boolean enabled = requiredBoolean(root, "enable");
+        boolean enabled = requiredBoolean(root, ConfigKey.ENABLED.name());
 
         return new BroadcastConfig(
                 BroadcastLanguage.fromCode(languageCode),
@@ -157,8 +162,8 @@ public final class ConfigManager {
     }
 
     private static int requiredWarningThreshold(JsonObject root) {
-        JsonElement element = root.has("warning-threshold")
-                ? root.get("warning-threshold")
+        JsonElement element = root.has(ConfigKey.WARNING_THRESHOLD.name())
+                ? root.get(ConfigKey.WARNING_THRESHOLD.name())
                 : root.get("warning-treshold");
 
         if (element == null || !element.isJsonPrimitive() || !element.getAsJsonPrimitive().isNumber()) {
