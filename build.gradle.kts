@@ -20,11 +20,10 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 }
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
+	maven {
+		name = "Terraformers"
+		url = uri("https://maven.terraformersmc.com/releases/")
+	}
 }
 
 fabricApi {
@@ -40,6 +39,7 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	implementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
+	implementation("com.terraformersmc:modmenu:${providers.gradleProperty("modmenu_version").get()}")
 
 	testImplementation("org.junit.jupiter:junit-jupiter:6.0.0")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.0")

@@ -15,5 +15,18 @@
   "command.totem-of-undying-broadcast.settings.warning_threshold.current.en_us": "Current warning threshold: %1$s",
   "command.totem-of-undying-broadcast.settings.warning_threshold.updated.en_us": "Warning threshold set to %1$s.",
   "message.totem-of-undying-broadcast.low_totem_count.en_us": "[Warning] %1$s only has %2$s Totem of Undying left!",
-  "message.totem-of-undying-broadcast.offhand_totem_missing.en_us": "[Warning] %1$s does not have a Totem of Undying in their offhand!"
+  "message.totem-of-undying-broadcast.offhand_totem_missing.en_us": "[Warning] %1$s does not have a Totem of Undying in their offhand!",
+  "screen.totem-of-undying-broadcast.cancel.en_us": "Cancel",
+  "screen.totem-of-undying-broadcast.common.enabled.en_us": "Count broadcasts",
+  "screen.totem-of-undying-broadcast.common.language.en_us": "Language",
+  "screen.totem-of-undying-broadcast.common.title.en_us": "Common",
+  "screen.totem-of-undying-broadcast.common.warning_threshold.en_us": "Warning threshold",
+  "screen.totem-of-undying-broadcast.done.en_us": "Done",
+  "screen.totem-of-undying-broadcast.error.positive_integer.en_us": "Enter a positive whole number.",
+  "screen.totem-of-undying-broadcast.tick_check.enabled.en_us": "Scheduled checks",
+  "screen.totem-of-undying-broadcast.tick_check.tick.en_us": "Check interval (ticks)",
+  "screen.totem-of-undying-broadcast.tick_check.title.en_us": "Tick Check",
+  "screen.totem-of-undying-broadcast.title.en_us": "Totem of Undying Broadcast",
+  "screen.totem-of-undying-broadcast.value.off.en_us": "Off",
+  "screen.totem-of-undying-broadcast.value.on.en_us": "On"
 }

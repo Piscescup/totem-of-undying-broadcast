@@ -18,6 +18,9 @@
 		"client": [
           "io.github.piscescup.fabricmc.TotemOfUndyingBroadcast"
 		],
+		"modmenu": [
+			"io.github.piscescup.fabricmc.integration.ModMenuIntegration"
+		],
 		"fabric-datagen": [
 			"io.github.piscescup.fabricmc.TotemOfUndyingBroadcastDataGenerator"
 		]
@@ -27,5 +30,8 @@
 		"minecraft": "~26.2",
 		"java": ">=25",
 		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": ">=20.0.0"
 	}
 }

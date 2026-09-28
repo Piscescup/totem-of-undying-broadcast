@@ -71,6 +71,58 @@ public enum TotemTranslation {
             "command.totem-of-undying-broadcast.check.unavailable",
             "This check is only available while playing in a world or on a server.",
             "只有进入世界或服务器后才能进行检查。"),
+    GUI_TITLE(
+            "screen.totem-of-undying-broadcast.title",
+            "Totem of Undying Broadcast",
+            "不死图腾数量播报"),
+    GUI_COMMON_TITLE(
+            "screen.totem-of-undying-broadcast.common.title",
+            "Common",
+            "通用设置"),
+    GUI_TICK_CHECK_TITLE(
+            "screen.totem-of-undying-broadcast.tick_check.title",
+            "Tick Check",
+            "定时检查"),
+    GUI_LANGUAGE(
+            "screen.totem-of-undying-broadcast.common.language",
+            "Language",
+            "语言"),
+    GUI_WARNING_THRESHOLD(
+            "screen.totem-of-undying-broadcast.common.warning_threshold",
+            "Warning threshold",
+            "警告阈值"),
+    GUI_BROADCAST_ENABLED(
+            "screen.totem-of-undying-broadcast.common.enabled",
+            "Count broadcasts",
+            "数量变化播报"),
+    GUI_CHECK_TICK(
+            "screen.totem-of-undying-broadcast.tick_check.tick",
+            "Check interval (ticks)",
+            "检查间隔（tick）"),
+    GUI_CHECK_ENABLED(
+            "screen.totem-of-undying-broadcast.tick_check.enabled",
+            "Scheduled checks",
+            "定时检查"),
+    GUI_ON(
+            "screen.totem-of-undying-broadcast.value.on",
+            "On",
+            "开启"),
+    GUI_OFF(
+            "screen.totem-of-undying-broadcast.value.off",
+            "Off",
+            "关闭"),
+    GUI_DONE(
+            "screen.totem-of-undying-broadcast.done",
+            "Done",
+            "完成"),
+    GUI_CANCEL(
+            "screen.totem-of-undying-broadcast.cancel",
+            "Cancel",
+            "取消"),
+    GUI_INVALID_POSITIVE_INTEGER(
+            "screen.totem-of-undying-broadcast.error.positive_integer",
+            "Enter a positive whole number.",
+            "请输入正整数。"),
     SAVE_FAILED(
             "command.totem-of-undying-broadcast.settings.save_failed",
             "Unable to save the settings. Check the client log for details.",
