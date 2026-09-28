@@ -1,14 +1,19 @@
 {
   "command.totem-of-undying-broadcast.check.passed.zh_cn": "检查通过：不死图腾数量充足，且副手持有不死图腾。",
   "command.totem-of-undying-broadcast.check.unavailable.zh_cn": "只有进入世界或服务器后才能进行检查。",
+  "command.totem-of-undying-broadcast.settings.check.enable.current.zh_cn": "当前是否启用定时检查：%1$s",
+  "command.totem-of-undying-broadcast.settings.check.enable.updated.zh_cn": "定时检查启用状态已设置为：%1$s。",
+  "command.totem-of-undying-broadcast.settings.check.summary.zh_cn": "定时检查设置—[间隔：%1$s tick，启用：%2$s]",
+  "command.totem-of-undying-broadcast.settings.check.tick.current.zh_cn": "定时检查间隔：%1$s tick",
+  "command.totem-of-undying-broadcast.settings.check.tick.updated.zh_cn": "定时检查间隔已设置为 %1$s tick。",
   "command.totem-of-undying-broadcast.settings.enable.current.zh_cn": "当前是否启用播报：%1$s",
   "command.totem-of-undying-broadcast.settings.enable.updated.zh_cn": "播报启用状态已设置为：%1$s。",
   "command.totem-of-undying-broadcast.settings.lang.current.zh_cn": "当前语言：%1$s",
   "command.totem-of-undying-broadcast.settings.lang.updated.zh_cn": "语言已设置为 %1$s。",
   "command.totem-of-undying-broadcast.settings.save_failed.zh_cn": "无法保存设置，请查看客户端日志了解详情。",
-  "command.totem-of-undying-broadcast.settings.summary.zh_cn": "不死图腾数量播报设置—[语言：%1$s，警告阈值：%2$s，启用：%3$s]",
+  "command.totem-of-undying-broadcast.settings.summary.zh_cn": "不死图腾数量播报设置—[语言：%1$s，警告阈值：%2$s，数量变化播报：%3$s，检查间隔：%4$s tick，定时检查：%5$s]",
   "command.totem-of-undying-broadcast.settings.warning_threshold.current.zh_cn": "当前警告阈值：%1$s",
   "command.totem-of-undying-broadcast.settings.warning_threshold.updated.zh_cn": "警告阈值已设置为 %1$s。",
-  "message.totem-of-undying-broadcast.low_totem_count.zh_cn": "⚠ %1$s 的不死图腾仅剩 %2$s 个！",
-  "message.totem-of-undying-broadcast.offhand_totem_missing.zh_cn": "⚠ %1$s 的副手没有不死图腾！"
+  "message.totem-of-undying-broadcast.low_totem_count.zh_cn": "【警告】 %1$s 的不死图腾仅剩 %2$s 个！",
+  "message.totem-of-undying-broadcast.offhand_totem_missing.zh_cn": "【警告】 %1$s 的副手没有不死图腾！"
 }

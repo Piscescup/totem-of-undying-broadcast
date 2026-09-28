@@ -2,6 +2,7 @@ package io.github.piscescup.fabricmc;
 
 import io.github.piscescup.fabricmc.command.SettingsCommand;
 import io.github.piscescup.fabricmc.config.ConfigManager;
+import io.github.piscescup.fabricmc.core.TotemCountChecker;
 import net.fabricmc.api.ClientModInitializer;
 
 import static io.github.piscescup.fabricmc.TotemOfUndyingBroadcastReferences.MOD_LOGGER;
@@ -13,7 +14,7 @@ public class TotemOfUndyingBroadcast implements ClientModInitializer {
 		ConfigManager configManager = new ConfigManager();
 
 		configManager.load();
-		TotemCountMonitor monitor = new TotemCountMonitor(configManager);
+		TotemCountChecker monitor = new TotemCountChecker(configManager);
 		SettingsCommand.register(configManager, monitor);
 		monitor.register();
 

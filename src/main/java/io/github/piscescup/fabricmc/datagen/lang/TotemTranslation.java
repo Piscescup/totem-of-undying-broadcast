@@ -7,16 +7,16 @@ import net.minecraft.network.chat.MutableComponent;
 public enum TotemTranslation {
     LOW_TOTEM_COUNT(
             "message.totem-of-undying-broadcast.low_totem_count",
-            "⚠ %1$s only has %2$s Totem of Undying left!",
-            "⚠ %1$s 的不死图腾仅剩 %2$s 个！"),
+            "[Warning] %1$s only has %2$s Totem of Undying left!",
+            "【警告】 %1$s 的不死图腾仅剩 %2$s 个！"),
     OFFHAND_TOTEM_MISSING(
             "message.totem-of-undying-broadcast.offhand_totem_missing",
-            "⚠ %1$s does not have a Totem of Undying in his(her) offhand!",
-            "⚠ %1$s 的副手没有不死图腾！"),
+            "[Warning] %1$s does not have a Totem of Undying in his(her) offhand!",
+            "【警告】 %1$s 的副手没有不死图腾！"),
     SETTINGS_SUMMARY(
             "command.totem-of-undying-broadcast.settings.summary",
-            "Num of ToU Broadcast settings — [language: %1$s, warning threshold: %2$s, enabled: %3$s]",
-            "不死图腾数量播报设置—[语言：%1$s，警告阈值：%2$s，启用：%3$s]"),
+            "Num of ToU Broadcast settings — [language: %1$s, warning threshold: %2$s, count broadcasts: %3$s, check interval: %4$s tick(s), scheduled checks: %5$s]",
+            "不死图腾数量播报设置—[语言：%1$s，警告阈值：%2$s，数量变化播报：%3$s，检查间隔：%4$s tick，定时检查：%5$s]"),
     LANGUAGE_CURRENT(
             "command.totem-of-undying-broadcast.settings.lang.current",
             "Current language: %1$s",
@@ -41,6 +41,28 @@ public enum TotemTranslation {
             "command.totem-of-undying-broadcast.settings.enable.updated",
             "Broadcasts enabled: %1$s.",
             "播报启用状态已设置为：%1$s。"),
+    SETTING_CHECK_TICK_CURRENT(
+        "command.totem-of-undying-broadcast.settings.check.tick.current",
+        "Scheduled check interval: %1$s tick(s)",
+        "定时检查间隔：%1$s tick"
+    ),
+    SETTING_CHECK_TICK_UPDATED(
+        "command.totem-of-undying-broadcast.settings.check.tick.updated",
+        "Scheduled check interval set to %1$s tick(s).",
+        "定时检查间隔已设置为 %1$s tick。"
+    ),
+    CHECK_SETTINGS_SUMMARY(
+            "command.totem-of-undying-broadcast.settings.check.summary",
+            "Scheduled checks — [interval: %1$s tick(s), enabled: %2$s]",
+            "定时检查设置—[间隔：%1$s tick，启用：%2$s]"),
+    CHECK_ENABLED_CURRENT(
+            "command.totem-of-undying-broadcast.settings.check.enable.current",
+            "Scheduled checks currently enabled: %1$s",
+            "当前是否启用定时检查：%1$s"),
+    CHECK_ENABLED_UPDATED(
+            "command.totem-of-undying-broadcast.settings.check.enable.updated",
+            "Scheduled checks enabled: %1$s.",
+            "定时检查启用状态已设置为：%1$s。"),
     CHECK_PASSED(
             "command.totem-of-undying-broadcast.check.passed",
             "Check passed: the totem count is sufficient and the offhand contains a Totem of Undying.",
