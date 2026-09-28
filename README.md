@@ -6,6 +6,7 @@ Client-side Fabric mod that broadcasts warnings about your Totems of Undying in 
 
 ```text
 /num-tou settings
+/num-tou settings gui
 /num-tou settings lang get
 /num-tou settings lang set <en_us|zh_cn>
 /num-tou settings warning-threshold get
@@ -19,6 +20,11 @@ Client-side Fabric mod that broadcasts warnings about your Totems of Undying in 
 /num-tou settings check enable set <true|false>
 /num-tou check
 ```
+
+`/num-tou settings gui` opens the in-game configuration screen. Changes are
+written only after selecting **Done**; **Cancel** closes the screen without saving.
+When Mod Menu is installed, the same screen is available from this mod's
+configuration button in the Mods list.
 
 `settings enable` controls the existing count-change broadcasts: a warning is sent
 when the count is first found below the threshold or decreases while below it.

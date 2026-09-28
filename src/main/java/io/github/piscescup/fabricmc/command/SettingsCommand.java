@@ -15,6 +15,7 @@ import io.github.piscescup.fabricmc.core.TOUMonitor;
 import io.github.piscescup.fabricmc.core.TotemCountChecker;
 import io.github.piscescup.fabricmc.config.*;
 import io.github.piscescup.fabricmc.datagen.lang.TotemTranslation;
+import io.github.piscescup.fabricmc.gui.SettingsScreen;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
@@ -45,6 +46,8 @@ public final class SettingsCommand {
                 .then(warningThresholdSettingCommand(configManager))
                 .then(enableSettingCommand(configManager))
                 .then(checkSettingCommands(configManager))
+                .then(ClientCommands.literal("gui")
+                    .executes(context -> openGui(context.getSource(), configManager)))
             )
             .then(ClientCommands.literal("check")
                 .executes(context -> runCheck(context.getSource(), configManager, checker))
@@ -225,6 +228,15 @@ public final class SettingsCommand {
     }
 
     // ---------- /num-tou settings ----------
+
+    private static int openGui(
+        FabricClientCommandSource source,
+        ConfigManager configManager
+    ) {
+        source.getClient().schedule(() ->
+            source.getClient().setScreenAndShow(new SettingsScreen(null, configManager)));
+        return 1;
+    }
 
     private static int showAll(FabricClientCommandSource source, ConfigManager configManager) {
         BroadcastLanguage language = currentLanguage(configManager);

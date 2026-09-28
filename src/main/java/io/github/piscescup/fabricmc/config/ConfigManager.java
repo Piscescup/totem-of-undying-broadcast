@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -93,6 +94,17 @@ public final class ConfigManager {
         }
         cfg.updateProperty(key, value);
         ConfigIO.write(cfg.toCfgFile(), cfg.toJson());
+    }
+
+    public synchronized void setProperties(Map<String, ?> properties) throws IOException {
+        for (String key : properties.keySet()) {
+            if (find(key) == null) {
+                throw new IllegalArgumentException("Unknown config key: " + key);
+            }
+        }
+
+        properties.forEach((key, value) -> find(key).updateProperty(key, value));
+        save();
     }
 
 

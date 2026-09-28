@@ -15,5 +15,18 @@
   "command.totem-of-undying-broadcast.settings.warning_threshold.current.zh_cn": "当前警告阈值：%1$s",
   "command.totem-of-undying-broadcast.settings.warning_threshold.updated.zh_cn": "警告阈值已设置为 %1$s。",
   "message.totem-of-undying-broadcast.low_totem_count.zh_cn": "【警告】 %1$s 的不死图腾仅剩 %2$s 个！",
-  "message.totem-of-undying-broadcast.offhand_totem_missing.zh_cn": "【警告】 %1$s 的副手没有不死图腾！"
+  "message.totem-of-undying-broadcast.offhand_totem_missing.zh_cn": "【警告】 %1$s 的副手没有不死图腾！",
+  "screen.totem-of-undying-broadcast.cancel.zh_cn": "取消",
+  "screen.totem-of-undying-broadcast.common.enabled.zh_cn": "数量变化播报",
+  "screen.totem-of-undying-broadcast.common.language.zh_cn": "语言",
+  "screen.totem-of-undying-broadcast.common.title.zh_cn": "通用设置",
+  "screen.totem-of-undying-broadcast.common.warning_threshold.zh_cn": "警告阈值",
+  "screen.totem-of-undying-broadcast.done.zh_cn": "完成",
+  "screen.totem-of-undying-broadcast.error.positive_integer.zh_cn": "请输入正整数。",
+  "screen.totem-of-undying-broadcast.tick_check.enabled.zh_cn": "定时检查",
+  "screen.totem-of-undying-broadcast.tick_check.tick.zh_cn": "检查间隔（tick）",
+  "screen.totem-of-undying-broadcast.tick_check.title.zh_cn": "定时检查",
+  "screen.totem-of-undying-broadcast.title.zh_cn": "不死图腾数量播报",
+  "screen.totem-of-undying-broadcast.value.off.zh_cn": "关闭",
+  "screen.totem-of-undying-broadcast.value.on.zh_cn": "开启"
 }
