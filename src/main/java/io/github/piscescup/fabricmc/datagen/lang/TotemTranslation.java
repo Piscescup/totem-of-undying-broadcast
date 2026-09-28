@@ -11,7 +11,7 @@ public enum TotemTranslation {
             "【警告】 %1$s 的不死图腾仅剩 %2$s 个！"),
     OFFHAND_TOTEM_MISSING(
             "message.totem-of-undying-broadcast.offhand_totem_missing",
-            "[Warning] %1$s does not have a Totem of Undying in his(her) offhand!",
+            "[Warning] %1$s does not have a Totem of Undying in their offhand!",
             "【警告】 %1$s 的副手没有不死图腾！"),
     SETTINGS_SUMMARY(
             "command.totem-of-undying-broadcast.settings.summary",

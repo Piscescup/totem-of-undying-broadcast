@@ -15,5 +15,5 @@
   "command.totem-of-undying-broadcast.settings.warning_threshold.current.en_us": "Current warning threshold: %1$s",
   "command.totem-of-undying-broadcast.settings.warning_threshold.updated.en_us": "Warning threshold set to %1$s.",
   "message.totem-of-undying-broadcast.low_totem_count.en_us": "[Warning] %1$s only has %2$s Totem of Undying left!",
-  "message.totem-of-undying-broadcast.offhand_totem_missing.en_us": "[Warning] %1$s does not have a Totem of Undying in his(her) offhand!"
+  "message.totem-of-undying-broadcast.offhand_totem_missing.en_us": "[Warning] %1$s does not have a Totem of Undying in their offhand!"
 }

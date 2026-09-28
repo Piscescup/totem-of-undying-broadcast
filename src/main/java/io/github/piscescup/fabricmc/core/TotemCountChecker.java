@@ -90,7 +90,11 @@ public final class TotemCountChecker {
         }
 
         if (monitor.checkPeriod(periodicEnabled, checkTick)) {
-            sendCheckWarnings(client, player, monitor.countTotems(), language);
+            sendCheckWarnings(
+                client,
+                player,
+                monitor.checkCurrentState(threshold),
+                language);
             return;
         }
 

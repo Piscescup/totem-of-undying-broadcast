@@ -66,15 +66,16 @@ public class TOUMonitor {
         return player.getOffhandItem().getItem() == Items.TOTEM_OF_UNDYING;
     }
 
-    public ManualCheckResult runManualCheck(int threshold) {
+    public CheckResult checkCurrentState(int threshold) {
         int currentCount = countTotems();
         boolean lowCount   = currentCount < threshold;
-        boolean hasOffhand = hasTotemInOffhand();
+        boolean missingOffhand = !hasTotemInOffhand();
 
-        if (lowCount && !hasOffhand) return ManualCheckResult.ALL;
-        if (lowCount)                return ManualCheckResult.LOW_COUNT;
-        if (!hasOffhand)             return ManualCheckResult.MISSING;
-        return ManualCheckResult.PASS;
+        return new CheckResult(currentCount, lowCount, missingOffhand);
+    }
+
+    public ManualCheckResult runManualCheck(int threshold) {
+        return checkCurrentState(threshold).result();
     }
 
     public void reset() {
@@ -90,33 +91,45 @@ public class TOUMonitor {
         ALL
     }
 
-}
-
-final class CheckSchedule {
-    private int interval;
-    private int elapsedTicks;
-
-    boolean tick(boolean enable, int checkTick) {
-        if (!enable) {
-            elapsedTicks = 0;
-            return false;
+    public record CheckResult(
+        int totemCount,
+        boolean lowCount,
+        boolean missingOffhand
+    ) {
+        public ManualCheckResult result() {
+            if (lowCount && missingOffhand) return ManualCheckResult.ALL;
+            if (lowCount)                   return ManualCheckResult.LOW_COUNT;
+            if (missingOffhand)             return ManualCheckResult.MISSING;
+            return ManualCheckResult.PASS;
         }
-
-        if (interval != checkTick) {
-            interval = checkTick;
-            elapsedTicks = 0;
-        }
-
-        if (++elapsedTicks < interval) {
-            return false;
-        }
-
-        elapsedTicks = 0;
-        return true;
     }
 
-    void reset() {
-        interval = 0;
-        elapsedTicks = 0;
+    private static final class CheckSchedule {
+        private int interval;
+        private int elapsedTicks;
+
+        private boolean tick(boolean enable, int checkTick) {
+            if (!enable) {
+                elapsedTicks = 0;
+                return false;
+            }
+
+            if (interval != checkTick) {
+                interval = checkTick;
+                elapsedTicks = 0;
+            }
+
+            if (++elapsedTicks < interval) {
+                return false;
+            }
+
+            elapsedTicks = 0;
+            return true;
+        }
+
+        private void reset() {
+            interval = 0;
+            elapsedTicks = 0;
+        }
     }
 }
