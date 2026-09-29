@@ -33,6 +33,7 @@ public final class SettingsCommand {
     public static void register(ConfigManager configManager, TotemCountChecker checker) {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) ->
             dispatcher.register(commandTree(configManager, checker)));
+        GroupInvitationChat.register(configManager);
     }
 
     static LiteralArgumentBuilder<FabricClientCommandSource> commandTree(
@@ -51,7 +52,8 @@ public final class SettingsCommand {
             )
             .then(ClientCommands.literal("check")
                 .executes(context -> runCheck(context.getSource(), configManager, checker))
-            );
+            )
+            .then(GroupCommand.command(configManager));
     }
 
     private static int runCheck(

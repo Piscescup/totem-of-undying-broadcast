@@ -1,7 +1,7 @@
 package io.github.piscescup.fabricmc.io;
 
 import com.google.gson.*;
-import io.github.piscescup.fabricmc.config.Configurable;
+import io.github.piscescup.fabricmc.config.ConfigFile;
 import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public final class ConfigIO {
 
     private ConfigIO() {}
 
-    public static <T extends Configurable> T read(
+    public static <T extends ConfigFile> T read(
         Path file, T fallback, Function<JsonElement, T> parser) {
 
         if (Files.notExists(file)) {
@@ -65,7 +65,7 @@ public final class ConfigIO {
         }
     }
 
-    public static void read(Path file, Configurable target) throws IOException {
+    public static void read(Path file, ConfigFile target) throws IOException {
         try (Reader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
             JsonElement root = JsonParser.parseReader(reader);
             target.parseFromJson(root);
