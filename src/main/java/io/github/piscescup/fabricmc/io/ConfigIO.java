@@ -35,6 +35,10 @@ public final class ConfigIO {
         return configDir().resolve("check.json");
     }
 
+    public static Path groupConfigFile() {
+        return configDir().resolve("group.json");
+    }
+
     private ConfigIO() {}
 
     public static <T extends Configurable> T read(
