@@ -1,9 +1,7 @@
 package io.github.piscescup.fabricmc.config;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.nio.file.Path;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -12,19 +10,13 @@ import java.util.function.Function;
  * @author REN YuanTong
  * @since
  */
-public interface Configurable {
+public interface Configurable<P> extends ConfigFile {
 
-    JsonElement toJson();
+    P getProperty(String key);
 
-    void parseFromJson(JsonElement jsonElement);
-
-    <T> T getProperty(String key, Function<String, T> converter);
-
-    <T> void updateProperty(String key, T value);
+    void updateProperty(String key, P value);
 
     Set<String> keySet();
-
-    Path toCfgFile();
 
     static <T> T parse(
         JsonObject jo, String key, T defaultValue,

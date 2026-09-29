@@ -1,7 +1,6 @@
 package io.github.piscescup.fabricmc;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

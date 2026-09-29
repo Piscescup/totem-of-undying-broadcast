@@ -8,11 +8,10 @@ import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 
 
 public class BroadcastCommonConfig
-    implements Configurable
+    implements Configurable<String>
 {
     public static final int MIN_WARNING_THRESHOLD = 1;
     public static final int DEFAULT_WARNING_THRESHOLD = 3;
@@ -39,13 +38,13 @@ public class BroadcastCommonConfig
     }
 
     @Override
-    public <T> T getProperty(String key, Function<String, T> converter) {
-        return converter.apply(cfg.get(key));
+    public String getProperty(String key) {
+        return cfg.get(key);
     }
 
     @Override
-    public <T> void updateProperty(String key, T value) {
-        cfg.put(key, String.valueOf(value));
+    public void updateProperty(String key, String value) {
+        cfg.put(key, value);
     }
 
     @Override
